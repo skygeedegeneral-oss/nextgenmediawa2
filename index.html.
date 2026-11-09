@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextGenMediaWa | We Inform, Entertain and Inspire</title>
+<meta name="description" content="NextGenMediaWa brings you Ghanaian and international news, music, sports and entertainment.">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#ed1c24;--black:#111;--white:#fff;--grey:#f4f4f4}
+body{font-family:Arial,sans-serif;background:var(--grey);color:#171717}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:0;font-weight:bold}
+header{background:#111;color:white;padding:20px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.brand{font-size:27px;font-weight:bold}
+.brand span,footer span{color:var(--red)}
+.tagline{font-size:11px;color:#ddd;margin-top:6px;letter-spacing:1px}
+.header-right{display:flex;gap:10px;align-items:center}
+.admin-btn{background:var(--red);color:white;padding:10px 15px;border-radius:5px}
+nav{background:var(--red);padding:14px 5%;display:flex;gap:22px;flex-wrap:wrap}
+nav a{color:white;font-size:13px;font-weight:bold}
+nav a:hover{color:#111}
+.menu-btn{display:none;background:transparent;color:white;font-size:24px}
+.breaking{background:#222;color:white;padding:12px 5%;font-size:13px}
+.breaking strong{background:var(--red);padding:7px;margin-right:10px}
+.hero{background:linear-gradient(120deg,#111,#292929);color:white;padding:65px 7%}
+.hero h1{font-size:38px;margin-bottom:15px}
+.hero h1 span{color:var(--red)}
+.hero p{max-width:650px;line-height:1.8;color:#ddd}
+.hero-btn{display:inline-block;background:var(--red);color:white;padding:12px 20px;margin-top:22px;border-radius:4px}
+.search-area{padding:20px 5%;background:white}
+.search-area input{width:100%;padding:14px;border:1px solid #ddd;border-radius:5px;font-size:15px}
+.section{padding:35px 5%}
+.section h2,.music h2{border-left:5px solid var(--red);padding-left:12px;margin-bottom:22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px #00000012}
+.card img{width:100%;height:165px;object-fit:cover;background:#ddd}
+.card-content{padding:18px}
+.category{color:var(--red);font-size:11px;font-weight:bold;text-transform:uppercase}
+.card h3{margin:9px 0;font-size:18px}
+.card p{color:#666;font-size:14px;line-height:1.6}
+.card-actions{display:flex;gap:10px;margin-top:15px;flex-wrap:wrap}
+.small-btn{background:var(--red);color:white;padding:9px 12px;border-radius:4px;font-size:12px}
+.secondary-btn{background:#222;color:white;padding:9px 12px;border-radius:4px;font-size:12px}
+.music{padding:35px 5%;background:#eee}
+.music-item{background:white;padding:17px;border-radius:7px;margin-bottom:13px}
+.music-item h3{margin-bottom:7px}
+.music-item audio{width:100%;margin:10px 0}
+.music-item a{display:inline-block;background:var(--red);color:white;padding:9px 14px;border-radius:4px;font-size:13px}
+.empty{background:white;padding:25px;text-align:center;color:#777;border-radius:6px}
+footer{background:#111;color:white;text-align:center;padding:30px 15px;line-height:1.9;margin-top:20px}
+footer p{font-size:13px;color:#ccc}
+.social{display:flex;justify-content:center;gap:12px;margin:15px 0}
+.social a{background:var(--red);padding:9px 15px;border-radius:4px;color:white;font-size:13px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:1000;overflow:auto;padding:20px}
+.modal-content{background:white;max-width:750px;margin:30px auto;padding:25px;border-radius:8px;position:relative}
+.close{float:right;background:var(--red);color:white;padding:7px 12px;border-radius:4px}
+.modal-content h2{margin:20px 0 12px}
+.modal-content p{line-height:1.8;margin:12px 0}
+.modal-content img{width:100%;max-height:350px;object-fit:cover;margin-top:15px}
+.admin-panel{display:none;background:white;padding:25px 5%}
+.admin-panel h2{margin-bottom:15px}
+.admin-panel input,.admin-panel textarea,.admin-panel select{width:100%;padding:12px;margin:7px 0 15px;border:1px solid #ddd;border-radius:5px;font:inherit}
+.admin-panel textarea{min-height:120px}
+.admin-panel label{font-weight:bold;font-size:13px}
+.admin-panel button{background:var(--red);color:white;padding:12px 17px;border-radius:4px;margin:5px 5px 5px 0}
+.admin-panel .delete{background:#222}
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
+hr{border:0;border-top:1px solid #ddd;margin:25px 0}
+@media(max-width:650px){
+ header{gap:15px}
+ .brand{font-size:23px}
+ .menu-btn{display:block}
+ nav{display:none;flex-direction:column;gap:15px}
+ nav.show{display:flex}
+ .hero h1{font-size:30px}
+ .section{padding:28px 4%}
+ .cards{grid-template-columns:1fr}
+ .header-right{width:100%;justify-content:space-between}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div>
+  <div class="brand">NextGen<span>MediaWa</span></div>
+  <p class="tagline">WE INFORM, ENTERTAIN AND INSPIRE.</p>
+ </div>
+ <div class="header-right">
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  <button class="admin-btn" onclick="openAdmin()">Admin Dashboard</button>
+ </div>
+</header>
+
+<nav id="navigation">
+ <a href="#home">Home</a>
+ <a href="#breaking">Breaking News</a>
+ <a href="#news">Latest News</a>
+ <a href="#ghana">Ghana News</a>
+ <a href="#international">International</a>
+ <a href="#entertainment">Entertainment</a>
+ <a href="#music">Music</a>
+ <a href="#sports">Sports</a>
+ <a href="#trending">Trending</a>
+ <a href="#lifestyle">Lifestyle</a>
+ <a href="#contact">Contact</a>
+</nav>
+
+<div class="breaking" id="breaking">
+ <strong>BREAKING NEWS</strong>
+ <span id="breakingText">Welcome to NextGenMediaWa. Stay informed with the latest updates.</span>
+</div>
+
+<section class="hero" id="home">
+ <h1>Welcome to <span>NextGenMediaWa</span></h1>
+ <p>Your trusted source for the latest Ghanaian and international news, music, sports, entertainment, celebrity stories and trending topics.</p>
+ <a href="#news" class="hero-btn">Explore Latest Stories</a>
+</section>
+
+<div class="search-area">
+ <input type="search" id="searchInput" placeholder="Search news, artists, sports and stories..." oninput="searchPosts()">
+</div>
+
+<section class="section" id="news">
+ <h2>Latest News</h2>
+ <div class="cards" id="latestPosts"></div>
+</section>
+
+<section class="section" id="ghana">
+ <h2>Ghana News</h2>
+ <div class="cards" id="ghanaPosts"></div>
+</section>
+
+<section class="section" id="international">
+ <h2>International News</h2>
+ <div class="cards" id="internationalPosts"></div>
+</section>
+
+<section class="section" id="entertainment">
+ <h2>Entertainment & Celebrity News</h2>
+ <div class="cards" id="entertainmentPosts"></div>
+</section>
+
+<section class="section" id="sports">
+ <h2>Sports News</h2>
+ <div class="cards" id="sportsPosts"></div>
+</section>
+
+<section class="section" id="trending">
+ <h2>Trending Topics</h2>
+ <div class="cards" id="trendingPosts"></div>
+</section>
+
+<section class="section" id="lifestyle">
+ <h2>Lifestyle</h2>
+ <div class="cards" id="lifestylePosts"></div>
+</section>
+
+<section class="music" id="music">
+ <h2>Music Updates & Downloads</h2>
+ <p>Discover new songs, listen online and download featured music.</p>
+ <div id="musicList" style="margin-top:20px"></div>
+</section>
+
+<section class="section">
+ <h2>Popular Downloads</h2>
+ <div id="popularDownloads"></div>
+</section>
+
+<section class="section">
+ <h2>Recently Viewed Stories</h2>
+ <div class="cards" id="recentPosts"></div>
+</section>
+
+<section class="section" id="contact">
+ <h2>Contact NextGenMediaWa</h2>
+ <div class="card" style="padding:22px">
+  <p>For news tips, music submissions, artist promotion and business enquiries, contact us.</p>
+  <p style="margin-top:12px">Email: <a href="mailto:YOUR-EMAIL-HERE">YOUR-EMAIL-HERE</a></p>
+  <p style="margin-top:10px">Facebook: <a href="https://facebook.com/" target="_blank">Visit Facebook</a></p>
+  <p style="margin-top:10px">TikTok: <a href="https://tiktok.com/" target="_blank">Visit TikTok</a></p>
+ </div>
+</section>
+
+<!-- ADMIN DASHBOARD -->
+
+<section class="admin-panel" id="adminPanel">
+ <h2>NextGenMediaWa Admin Dashboard</h2>
+ <p>Manage your news articles and music uploads.</p>
+
+ <div id="adminLogin">
+  <label>Admin Password</label>
+  <input type="password" id="adminPassword" placeholder="Enter admin password">
+  <button onclick="loginAdmin()">Login</button>
+  <p style="font-size:12px;color:#777">Demo password: change-me-123. Set up proper server-side authentication before publishing publicly.</p>
+ </div>
+
+ <div id="adminTools" style="display:none">
+
+  <button onclick="logoutAdmin()">Logout</button>
+
+  <hr>
+  <div class="admin-grid">
+
+   <div>
+    <h3>Publish News Article</h3>
+    <form id="postForm">
+     <label>Article Headline</label>
+     <input id="postTitle" required placeholder="Enter headline">
+
+     <label>Category</label>
+     <select id="postCategory">
+      <option>Ghana News</option>
+      <option>International News</option>
+      <option>Entertainment</option>
+      <option>Celebrity News</option>
+      <option>Sports</option>
+      <option>Trending Topics</option>
+      <option>Lifestyle</option>
+     </select>
+
+     <label>Author</label>
+     <input id="postAuthor" placeholder="NextGenMediaWa">
+
+     <label>Article Image</label>
+     <input type="file" id="postImage" accept="image/*">
+
+     <label>Article Content</label>
+     <textarea id="postContent" required placeholder="Write your complete story here..."></textarea>
+
+     <label>
+      <input type="checkbox" id="isBreaking" style="width:auto">
+      Mark as Breaking News
+     </label><br>
+
+     <button type="submit">Publish Article</button>
+    </form>
+   </div>
+
+   <div>
+    <h3>Upload Music</h3>
+    <form id="musicForm">
+     <label>Song Title</label>
+     <input id="songTitle" required placeholder="Song title">
+
+     <label>Artist Name</label>
+     <input id="songArtist" required placeholder="Artist name">
+
+     <label>Music Cover</label>
+     <input type="file" id="songCover" accept="image/*">
+
+     <label>Music File (MP3)</label>
+     <input type="file" id="songFile" accept="audio/*" required>
+
+     <button type="submit">Upload Music</button>
+    </form>
+   </div>
+
+  </div>
+
+  <hr>
+  <h3>Manage Published Articles</h3>
+  <div id="managePosts"></div>
+
+  <hr>
+  <h3>Manage Uploaded Music</h3>
+  <div id="manageMusic"></div>
+
+ </div>
+</section>
+
+<!-- ARTICLE READING MODAL -->
+
+<div class="modal" id="articleModal">
+ <div class="modal-content">
+  <button class="close" onclick="closeArticle()">Close</button>
+  <div id="articleDetails"></div>
+ </div>
+</div>
+
+<footer>
+ <h2>NextGen<span>MediaWa</span></h2>
+ <p>WE INFORM, ENTERTAIN AND INSPIRE.</p>
+ <div class="social">
+  <a href="https://facebook.com/" target="_blank">Facebook</a>
+  <a href="https://tiktok.com/" target="_blank">TikTok</a>
+  <a href="https://youtube.com/" target="_blank">YouTube</a>
+ </div>
+ <p>© 2026 NextGenMediaWa. All rights reserved.</p>
+</footer>
+
+<script>
+// WEBSITE STORAGE
+
+const DB_KEY="nextgen_posts_v1";
+const MUSIC_KEY="nextgen_music_v1";
+const RECENT_KEY="nextgen_recent_v1";
+
+function getData(key){
+ try{return JSON.parse(localStorage.getItem(key))||[]}
+ catch(e){return []}
+}
+function saveData(key,data){
+ localStorage.setItem(key,JSON.stringify(data));
+}
+
+let posts=getData(DB_KEY);
+let music=getData(MUSIC_KEY);
+
+// SAMPLE ARTICLES
+
+if(posts.length===0){
+ posts=[
+ {
+ id:1,title:"Welcome to NextGenMediaWa",
+ category:"Ghana News",
+ author:"NextGenMediaWa",
+ content:"Welcome to NextGenMediaWa, your trusted source for news, music, sports and entertainment. We inform, entertain and inspire.",
+ image:"",
+ date:new Date().toLocaleDateString(),
+ breaking:false,
+ views:0
+ },
+ {
+ id:2,title:"Latest Ghana Entertainment Updates",
+ category:"Entertainment",
+ author:"NextGenMediaWa",
+ content:"Follow NextGenMediaWa for the latest entertainment updates, celebrity news and music releases.",
+ image:"",
+ date:new Date().toLocaleDateString(),
+ breaking:false,
+ views:0
+ },
+ {
+ id:3,title:"Football News and Updates",
+ category:"Sports",
+ author:"NextGenMediaWa",
+ content:"Stay updated with football fixtures, results, transfers and sports discussions.",
+ image:"",
+ date:new Date().toLocaleDateString(),
+ breaking:false,
+ views:0
+ }
+ ];
+ saveData(DB_KEY,posts);
+}
+
+// HTML SAFETY
+
+function escapeHTML(value){
+ return String(value||"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",
+ '"':"&quot;","'":"&#39;"
+ })[c]);
+}
+
+// IMAGE PLACEHOLDER
+
+function imageHTML(src){
+ return src
+ ? `<img src="${src}" alt="Article image">`
+ : `<div style="height:165px;background:#222;color:white;display:grid;place-items:center;font-weight:bold">NextGenMediaWa</div>`;
+}
+
+// ARTICLE CARD
+
+function articleCard(post){
+ return `
+ <article class="card">
+ ${imageHTML(post.image)}
+ <div class="card-content">
+ <span class="category">${escapeHTML(post.category)}</span>
+ <h3>${escapeHTML(post.title)}</h3>
+ <p>${escapeHTML(post.content.slice(0,115))}...</p>
+ <p style="margin-top:8px;font-size:11px">
+ By ${escapeHTML(post.author)} | ${escapeHTML(post.date)}
+ </p>
+ <div class="card-actions">
+ <button class="small-btn" onclick="readArticle(${post.id})">Read More</button>
+ <button class="secondary-btn" onclick="shareArticle(${post.id})">Share</button>
+ </div>
+ </div>
+ </article>`;
+}
+
+function renderPosts(){
+ const groups={
+ latestPosts:posts,
+ ghanaPosts:posts.filter(p=>p.category==="Ghana News"),
+ internationalPosts:posts.filter(p=>p.category==="International News"),
+ entertainmentPosts:posts.filter(p=>["Entertainment","Celebrity News"].includes(p.category)),
+ sportsPosts:posts.filter(p=>p.category==="Sports"),
+ trendingPosts:posts.filter(p=>p.category==="Trending Topics"),
+ lifestylePosts:posts.filter(p=>p.category==="Lifestyle")
+ };
+
+ Object.entries(groups).forEach(([id,list])=>{
+ document.getElementById(id).innerHTML=list.length
+ ?list.slice(0,12).map(articleCard).join("")
+ :'<div class="empty">No articles published in this category yet.</div>';
+ });
+
+ const breaking=posts.find(p=>p.breaking);
+ document.getElementById("breakingText").textContent=
+ breaking?breaking.title:"Welcome to NextGenMediaWa. Stay informed with the latest updates.";
+
+ renderRecent();
+ renderPopular();
+}
+
+// SEARCH
+
+function searchPosts(){
+ const query=document.getElementById("searchInput").value.toLowerCase();
+ const results=posts.filter(p=>
+ (p.title+" "+p.category+" "+p.content+" "+p.author).toLowerCase().includes(query)
+ );
+ document.getElementById("latestPosts").innerHTML=query
+ ?results.length?results.map(articleCard).join(""):'<div class="empty">No matching stories found.</div>'
+ :posts.slice(0,12).map(articleCard).join("");
+}
+
+// READ ARTICLE
+
+function readArticle(id){
+ const post=posts.find(p=>p.id===id);
+ if(!post)return;
+
+ post.views=(post.views||0)+1;
+ saveData(DB_KEY,posts);
+
+ let recent=getData(RECENT_KEY).filter(x=>x!==id);
+ recent.unshift(id);
+ saveData(RECENT_KEY,recent.slice(0,5));
+
+ document.getElementById("articleDetails").innerHTML=`
+ <span class="category">${escapeHTML(post.category)}</span>
+ <h2>${escapeHTML(post.title)}</h2>
+ <p>By ${escapeHTML(post.author)} | ${escapeHTML(post.date)}</p>
+ ${imageHTML(post.image)}
+ <p style="white-space:pre-wrap">${escapeHTML(post.content)}</p>
+ <button class="small-btn" onclick="shareArticle(${post.id})">Share Story</button>
+ `;
+ document.getElementById("articleModal").style.display="block";
+ renderPopular();
+ renderRecent();
+}
+
+function closeArticle(){
+ document.getElementById("articleModal").style.display="none";
+}
+
+// SHARE ARTICLES
+
+function shareArticle(id){
+ const p=posts.find(x=>x.id===id);
+ if(!p)return;
+ const shareData={
+ title:p.title,
+ text:p.title+" - NextGenMediaWa",
+ url:location.href
+ };
+ if(navigator.share){
+ navigator.share(shareData).catch(()=>{});
+ }else{
+ navigator.clipboard?.writeText(shareData.text+" "+shareData.url)
+ .then(()=>alert("Share text copied."));
+ }
+}
+
+// RECENT STORIES
+
+function renderRecent(){
+ const ids=getData(RECENT_KEY);
+ const recent=ids.map(id=>posts.find(p=>p.id===id)).filter(Boolean);
+ document.getElementById("recentPosts").innerHTML=
+ recent.length?recent.map(articleCard).join("")
+ :'<div class="empty">Recently viewed articles will appear here.</div>';
+}
+
+// POPULAR STORIES
+
+function renderPopular(){
+ const popular=[...posts].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5);
+ document.getElementById("popularDownloads").innerHTML=
+ popular.length?popular.map(p=>`
+ <div class="music-item">
+ <strong>${escapeHTML(p.title)}</strong>
+ <p>${p.views||0} views</p>
+ <button class="small-btn" onclick="readArticle(${p.id})">Read Story</button>
+ </div>`).join("")
+ :'<div class="empty">No popular stories yet.</div>';
+}
+
+// MUSIC DISPLAY
+
+function renderMusic(){
+ const list=document.getElementById("musicList");
+ list.innerHTML=music.length?music.map((m,i)=>`
+ <div class="music-item">
+ <h3>${escapeHTML(m.title)}</h3>
+ <p>Artist: ${escapeHTML(m.artist)}</p>
+ ${m.cover?`<img src="${m.cover}" style="width:100%;max-height:180px;object-fit:cover;border-radius:5px;margin-top:10px">`:""}
+ <audio controls preload="none" src="${m.file}"></audio>
+ <a href="${m.file}" download="${escapeHTML(m.title)}.mp3">Download Music</a>
+ </div>`).join("")
+ :'<div class="empty">No music uploaded yet. New music will appear here.</div>';
+}
+
+// ADMIN LOGIN
+
+let adminLoggedIn=false;
+
+function openAdmin(){
+ document.getElementById("adminPanel").style.display="block";
+ document.getElementById("adminPanel").scrollIntoView({behavior:"smooth"});
+}
+
+function loginAdmin(){
+ const password=document.getElementById("adminPassword").value;
+ if(password==="change-me-123"){
+ adminLoggedIn=true;
+ document.getElementById("adminLogin").style.display="none";
+ document.getElementById("adminTools").style.display="block";
+ renderAdmin();
+ }else{
+ alert("Incorrect password.");
+ }
+}
+
+function logoutAdmin(){
+ adminLoggedIn=false;
+ document.getElementById("adminLogin").style.display="block";
+ document.getElementById("adminTools").style.display="none";
+ document.getElementById("adminPassword").value="";
+}
+
+// FILE TO DATA URL
+
+function readFile(file){
+ return new Promise((resolve,reject)=>{
+ if(!file){resolve("");return}
+ const reader=new FileReader();
+ reader.onload=()=>resolve(reader.result);
+ reader.onerror=reject;
+ reader.readAsDataURL(file);
+ });
+}
+
+// PUBLISH ARTICLE
+
+document.getElementById("postForm").addEventListener("submit",async function(e){
+ e.preventDefault();
+ if(!adminLoggedIn)return;
+
+ const file=document.getElementById("postImage").files[0];
+ if(file&&file.size>1.5*1024*1024){
+ alert("Please use an image smaller than 1.5MB.");
+ return;
+ }
+
+ const image=await readFile(file);
+
+ const post={
+ id:Date.now(),
+ title:document.getElementById("postTitle").value.trim(),
+ category:document.getElementById("postCategory").value,
+ author:document.getElementById("postAuthor").value.trim()||"NextGenMediaWa",
+ content:document.getElementById("postContent").value.trim(),
+ image:image,
+ date:new Date().toLocaleDateString(),
+ breaking:document.getElementById("isBreaking").checked,
+ views:0
+ };
+
+ posts.unshift(post);
+ saveData(DB_KEY,posts);
+ this.reset();
+ renderPosts();
+ renderAdmin();
+ alert("Article published successfully in this browser.");
+});
+
+// UPLOAD MUSIC
+
+document.getElementById("musicForm").addEventListener("submit",async function(e){
+ e.preventDefault();
+ if(!adminLoggedIn)return;
+
+ const file=document.getElementById("songFile").files[0];
+ const cover=document.getElementById("songCover").files[0];
+
+ if(!file)return;
+
+ if(file.size>5*1024*1024){
+ alert("For this single-file version, use music files smaller than 5MB.");
+ return;
+ }
+
+ if(cover&&cover.size>1.5*1024*1024){
+ alert("Please use a cover image smaller than 1.5MB.");
+ return;
+ }
+
+ const musicFile=await readFile(file);
+ const coverImage=await readFile(cover);
+
+ music.unshift({
+ id:Date.now(),
+ title:document.getElementById("songTitle").value.trim(),
+ artist:document.getElementById("songArtist").value.trim(),
+ file:musicFile,
+ cover:coverImage,
+ downloads:0
+ });
+
+ saveData(MUS
